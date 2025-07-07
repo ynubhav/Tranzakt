@@ -11,9 +11,10 @@ function authmiddleware(req,res,next){
     const x=auth.split(' ')[1];
     const verify=jsonwebtoken.verify(x,JWT_SECRET);
     req.userId=verify.userId;
+    //req.firstname=verify.firstname;
     next();
     } catch (error) {
-        res.status(403).json({message: "1invalid token"})
+        res.status(403).json({message: "invalid token"})
     }
     }
     else

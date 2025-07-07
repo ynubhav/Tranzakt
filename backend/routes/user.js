@@ -80,15 +80,24 @@ userrouter.get('/bulk',async(req,res)=>{
     {
     const filtereddata=await User.find({});
     const xdata=filtereddata.map((data,index)=>{
-        return {firstname:data.firstname,lastname:data.lastname,_id:data._id}
+        return {firstname:data.firstname,lastname:data.lastname,_id:data._id,username:data.username}
     })
      return res.status(200).json({users:xdata});
     }
     const filtereddata=await User.find({$or:[{firstname:filter},{lastname:filter}]});
     const xdata=filtereddata.map((data,index)=>{
-        return {firstname:data.firstname,lastname:data.lastname,_id:data._id}
+        return {firstname:data.firstname,lastname:data.lastname,_id:data._id,username:data.username}
     })
     res.status(200).json({users:xdata});
+})
+//=================route to get me==============//
+userrouter.get('/me',authmiddleware,async(req,res)=>{
+
+    const id=req.userId;
+    const user=await User.findById(id);
+    const account=await Accounts.findOne({userId:id});
+    res.status(200).json({firstname:user.firstname,balance:account.balance});
+
 })
 module.exports=userrouter;
 

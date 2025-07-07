@@ -19,7 +19,7 @@ accountrouter.post('/transfer',authmiddleware,async(req,res)=>{
 //==========================start session==create-db-session
 const session=await mongoose.startSession();
 
-session.startTransaction();
+try{session.startTransaction();
 
 const fromuserid=req.userId;
 const touserid=req.body.to;
@@ -31,8 +31,8 @@ if(!mongoose.Types.ObjectId.isValid(fromuserid)||!mongoose.Types.ObjectId.isVali
 
 const account=await Accounts.findOne({userId:fromuserid});
 const balance=(account?account.balance:0);
-const senderexists=await Accounts.findOne({userId:fromuserid});
-const recieverexists=await Accounts.findOne({userId:touserid});
+const senderexists=await Accounts.findOne({userId:fromuserid}).session(session);
+const recieverexists=await Accounts.findOne({userId:touserid}).session(session);
 console.log(senderexists);
 console.log(recieverexists);
 if(amount>balance||!account||amount<0)
@@ -44,13 +44,20 @@ if(!senderexists||!recieverexists){
     await session.abortTransaction();
     return res.status(400).json({message:"Invalid account(s)"})
 }
-const x=await Accounts.findOneAndUpdate({userId:fromuserid},{ $inc: { balance: -amount } });
-const y=await Accounts.findOneAndUpdate({userId:touserid},{ $inc: { balance:amount } });
+const x=await Accounts.findOneAndUpdate({userId:fromuserid},{ $inc: { balance: -amount } },{session});
+const y=await Accounts.findOneAndUpdate({userId:touserid},{ $inc: { balance:amount } },{session});
 
 await session.commitTransaction();
 
-res.status(200).json({message:"Transfer Successful"})
+res.status(200).json({message:"Transfer Successful"})}
+catch(err){
+    await session.abortTransaction();
+    console.error("Transfer failed:", err.message);
+    res.status(400).json({ message: err.message || "Transfer failed" });
+}
+finally{session.endSession();}
 })
+
 module.exports={
     accountrouter
 }
