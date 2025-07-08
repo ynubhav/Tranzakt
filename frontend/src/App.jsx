@@ -3,6 +3,7 @@ import Signin from './pages/signin'
 import Signup from './pages/signup'
 import Dashboard from './pages/dashboard'
 import Send from './pages/send'
+import Profile from './pages/profile'
 function App() {
 
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path='/send' element={<Send/>}/>
       <Route path='/dashboard' element={<Dashboard user={'Anubhav'} pfplink={'johnpork.jpeg'}/>}/>
       <Route path='/signup' element={<Signup/>}/>
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
     </BrowserRouter>
   )
