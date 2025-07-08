@@ -22,7 +22,7 @@ userrouter.post('/signup',async(req,res)=>{
     {
     const user=await User.create(data);// returns the made entry
     const acc=await Accounts.create({userId:user._id,balance:(1+Math.floor(Math.random()*10000))});
-    const token=jsonwebtoken.sign({userId:user._id },JWT_SECRET);
+    const token=jsonwebtoken.sign({userId:user._id },JWT_SECRET,{ expiresIn: '30m' });
     res.status(200).json({message: "User created successfully",token:`Bearer ${token}`});
     }
     else
@@ -49,7 +49,8 @@ userrouter.post('/signin',async(req,res)=>{
     if (valid.success && databasearr.length) {
         const token = jsonwebtoken.sign(
             { userId: payload._id }, // safer to not include whole user
-            JWT_SECRET
+            JWT_SECRET,
+            { expiresIn: '30m' }
         );
         console.log(JWT_SECRET);
         res.status(200).json({ token: `Bearer ${token}` });
