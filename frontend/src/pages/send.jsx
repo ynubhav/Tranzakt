@@ -33,6 +33,9 @@ export default function Send(){
         } catch (error) {
             navigate('/signin');
         }
+        setTimeout(() => {
+                navigate('/dashboard')
+            }, 60000);
     },[])
     //=========================================//
     const [amount,setamt]=useState(0);
