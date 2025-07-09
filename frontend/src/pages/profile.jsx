@@ -29,7 +29,7 @@ export default function Profile(){
 
     return(
         <>
-        <div className='fixed top-0 left-0 w-screen h-screen bg-gray-50'></div>
+        <div className=' fixed top-0 left-0 w-screen h-screen bg-gray-50'></div>
         {retract&&<span ><div className="fixed top-0 left-0 h-screen w-[200px] bg-gray-950 border-1 border-blue-300">
             <div className="grid grid-cols-1">
                 <span onClick={()=>{setretract(!retract)}} className="border-1 border-blue-300 text-2xl text-orange-500 bg-gray-950 font-bold py-2 flex justify-center hover:cursor-pointer"><div className="inline-flex">Tranzakt.pay<div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" /></svg></div></div></span>
@@ -55,7 +55,7 @@ export default function Profile(){
     )
 }
 
-//==========toast=====handlelogout=============//
+//====== ====toast=====handlelogout=============//
 function handleLogout({navigate}) {
   toast("Are you sure you want to logout?", {
     action: {
