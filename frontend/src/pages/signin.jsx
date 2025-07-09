@@ -38,7 +38,3 @@ export default function Signin(){
         
     )
 }
-
-function handlesucces() {
-  toast("Hello! This is a toast.");
-}

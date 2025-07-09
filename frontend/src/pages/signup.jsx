@@ -25,7 +25,6 @@ export default function Signup(){
                 <Field onChange={(e)=>{setinitpass(e.target.value)}} fname={'Password'} ftype={'password'} fplaceholder={'P@s$w0rD'}/>
                 <Field onChange={(e)=>{setpass(e.target.value)}} fname={'Confirm Password'} ftype={'password'} fplaceholder={'P@s$w0rD'}/>
                 {initpass===password&&(password.length>5)&&<Button onClick={async()=>{
-                   
                    try{
                     const response=await axios.post("http://localhost:3000/api/v1/user/signup",{
                         username,
@@ -33,7 +32,6 @@ export default function Signup(){
                         lastname,
                         password
                     })
-                    console.log(response.data);
                     toast.success('Account created succesfully!')
                      {
                     localStorage.setItem("token",response.data.token)
