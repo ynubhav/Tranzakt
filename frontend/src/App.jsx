@@ -19,12 +19,12 @@ function App() {
       <Route path='/dashboard' element={<Dashboard user={'User'} pfplink={'johnpork.jpeg'}/>}/>
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/profile' element={<Profile/>}/>
-      <Route path='/home' element={<Home/>}/>
-      <Route path="*" element={<Navigate to="/home" />} />
+      <Route path='/home' element={<Home/>} />
+      <Route path="*" element={<Navigate to="/home" />}/>
     </Routes>
     </BrowserRouter>
-    <ToastContainer />
-    <Toaster richColors position="top-center" />
+    <ToastContainer/>
+    <Toaster richColors  position="top-center" />
     </>
   )
 }
