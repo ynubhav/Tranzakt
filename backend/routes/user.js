@@ -27,16 +27,13 @@ userrouter.post('/signup',async(req,res)=>{
     }
     else
     {
-        console.log(1);
         res.status(411).json({message:"Email already taken / Incorrect inputs"})
     }
     }
     catch(err){
-        console.log(2);
         res.status(409).json({message:"mail already taken / Incorrect inputs"});
     }
     finally{
-        console.log('hello');
     }
 })
 
@@ -48,7 +45,6 @@ userrouter.post('/signin',async(req,res)=>{
     const valid = currentuservalidation.safeParse(data);
     const databasearr = await User.find(data); // You should probably be doing a findOne with email
     const payload = databasearr[0];
-    console.log(payload);
 
     if (valid.success && databasearr.length) {
         const token = jsonwebtoken.sign(
@@ -56,13 +52,11 @@ userrouter.post('/signin',async(req,res)=>{
             JWT_SECRET,
             { expiresIn: '30m' }
         );
-        console.log(JWT_SECRET);
         res.status(200).json({ token: `Bearer ${token}` });
     } else {
         res.status(411).json({ message: "User not found" });
     }
 } catch (error) {
-    console.error("Login error:", error);
     res.status(411).json({ message: "Error while logging in" });
 }   
 })
