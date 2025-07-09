@@ -10,7 +10,7 @@ return(<><div className="mx-2">
                 <div className="font-bold text-xl text-gray-900 text-center m-2 hover:cursor-pointer">{firstname}</div>
         </div>
         {rendermore&&<More username={username} lastname={lastname}/>}
-            <div ><button onClick={onClick} className="bg-black text-white font-medium py-2 px-4 rounded-md hover:bg-gray-500 hover:cursor-pointer">Send Money</button></div>
+            <div ><button onClick={onClick} className="bg-black  text-white font-medium py-2 px-4 rounded-md hover:bg-gray-500 hover:cursor-pointer">Send Money</button></div>
         </span>
         </div>
 </>
