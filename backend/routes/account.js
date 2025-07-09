@@ -33,8 +33,6 @@ const account=await Accounts.findOne({userId:fromuserid});
 const balance=(account?account.balance:0);
 const senderexists=await Accounts.findOne({userId:fromuserid}).session(session);
 const recieverexists=await Accounts.findOne({userId:touserid}).session(session);
-console.log(senderexists);
-console.log(recieverexists);
 if(amount>balance||!account||amount<0)
 {
     await session.abortTransaction();
@@ -52,7 +50,6 @@ await session.commitTransaction();
 res.status(200).json({message:"Transfer Successful"})}
 catch(err){
     await session.abortTransaction();
-    console.error("Transfer failed:", err.message);
     res.status(400).json({ message: err.message || "Transfer failed" });
 }
 finally{session.endSession();}
