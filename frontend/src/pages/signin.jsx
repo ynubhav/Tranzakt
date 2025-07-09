@@ -5,6 +5,7 @@ import Pheader from "../components/pageheader";
 import Warning from "../components/warning";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Signin(){
     const [username,setusername]=useState("");
@@ -18,12 +19,17 @@ export default function Signin(){
                         <Field onChange={(e)=>{setusername(e.target.value)}} fname={'Email'} ftype={'text'} fplaceholder={'anubhav@xyzmail.com'}/>
                         <Field onChange={(e)=>{setpass(e.target.value)}} fname={'Password'} ftype={'password'} fplaceholder={'P@s$w0rD'}/>
                         <Button onClick={async()=>{
-                           const response=await axios.post('http://localhost:3000/api/v1/user/signin',{
+                           try{const response=await axios.post('http://localhost:3000/api/v1/user/signin',{
                                 username,
                                 password
                             })
+                            toast.success(`welcome`);
                             localStorage.setItem("token",response.data.token);
                             navigate('/dashboard')
+                        }
+                        catch(err){
+                                toast.error('Invalid Account');
+                            }
                         }} name={'Sign In'}/>
                         <Warning description={"Don't have an account "} topage={'Sign Up'} onClick={()=>{navigate('/signup')}}/>
                 </div>
@@ -31,4 +37,8 @@ export default function Signin(){
                 </div>
         
     )
+}
+
+function handlesucces() {
+  toast("Hello! This is a toast.");
 }

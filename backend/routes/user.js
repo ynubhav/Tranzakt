@@ -27,12 +27,16 @@ userrouter.post('/signup',async(req,res)=>{
     }
     else
     {
+        console.log(1);
         res.status(411).json({message:"Email already taken / Incorrect inputs"})
     }
     }
     catch(err){
+        console.log(2);
         res.status(409).json({message:"mail already taken / Incorrect inputs"});
-        console.log(JWT_SECRET)
+    }
+    finally{
+        console.log('hello');
     }
 })
 
@@ -60,10 +64,9 @@ userrouter.post('/signin',async(req,res)=>{
 } catch (error) {
     console.error("Login error:", error);
     res.status(411).json({ message: "Error while logging in" });
-}
-
-    
+}   
 })
+
 //=============updatinginfo-using-auth-route=======================//
 userrouter.put('/updateinfo',authmiddleware,async(req,res)=>{
     const uid=req.userId;
