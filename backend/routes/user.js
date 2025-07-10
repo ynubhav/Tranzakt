@@ -77,6 +77,7 @@ userrouter.get('/bulk',async(req,res)=>{
     if(filter==='')
     {
     const filtereddata=await User.find({});
+    filtereddata.reverse();
     const xdata=filtereddata.map((data,index)=>{
         return {firstname:data.firstname,lastname:data.lastname,_id:data._id,username:data.username}
     })
