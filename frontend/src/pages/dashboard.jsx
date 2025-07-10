@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Navbar from "../components/navbar";
+import Navbar from "../components/dashnavbar";
 import axios from "axios";
 import Searchedusers from "../components/results";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +42,7 @@ export default function Dashboard(){
     return(
         <div className="bg-gray-50">
         <Navbar user={firstname} pfplink={'johnpork.jpeg'}/>
-        <div className="p-2 text-xl font-bold">BALANCE: $ <span className="text-gray-500">{balance}</span></div>
+        <div className="p-2 text-xl font-bold">BALANCE: $ <span className="text-gray-500">{(Math.floor(balance*100))/100}</span></div>
         <div className="p-2 text-xl font-bold">Search Users</div>
         <div className="mx-4"><input onChange={(e)=>{setfilter(e.target.value)}} type="text" placeholder="Search Users ... " className="w-1/1 rounded-xl border-2 border-slate-500 p-2"/></div>
         {

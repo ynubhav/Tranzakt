@@ -35,24 +35,21 @@ export default function Send(){
             navigate('/signin');
             toast.error('Not Signed In')
         }
-        setTimeout(() => {
-                navigate('/dashboard')
-            }, 60000);
     })
     //=========================================//
     const [amount,setamt]=useState(0);
     return(
-        <div className="fixed top-0 left-0 w-screen h-screen  bg-green-300">
+        <div className="fixed top-0 left-0 w-screen h-screen  bg-gray-700">
         <div className="flex justify-center">
-        <div className="grid grid-cols-1 w-[350px] rounded-2xl bg-white mt-10 shadow-2xl shadow-amber-100">
-            <Pheader hname={'Send Money'} hdescription={'Tranzact safely ❤️'}/>
-            <div className="p-2 mx-2 font-bold">To :{' '}<span className="text-blue-300 font-black">{reciever}</span></div>
-            <Field fname={'Amount ($)'} fplaceholder={'Enter Amount'} ftype={'Number'}  onChange={(e)=>{settransition(false);setsucces(false);setamt(e.target.value)}}/>
+        <div className="grid grid-cols-1 w-[350px] rounded-2xl bg-white mt-10">
+            <Pheader hname={'Send Money'} hdescription={'Tranzakt safely ❤️'}/>
+            <div className="p-2 mx-2 font-bold">To :{' '}<span className="text-gray-700 font-bold">{reciever}</span></div>
+            <Field fname={'Amount ($)'} fplaceholder={'Enter Amount'} ftype={'Number'}  onChange={(e)=>{settransition(false);setsucces(false);if((((e.target.value)*100)%1==0))setamt(e.target.value)}}/>
             <Button name={'Initiate Tranzaction'} onClick={async()=>{
                 if(!reciever)
                     navigate('/dashboard');
                 if(amount<=0)
-                {toast.warn('Amount Invalid');return;}
+                {toast.warn('Minimum Transaction is: $ 0.01');return;}
                 setloading(true);
                 settransition(true);
                 setsucces(null);
@@ -80,7 +77,7 @@ export default function Send(){
             }
             setTimeout(() => {
             setloading(false);
-            }, 3000);
+            }, 1500);
             }}/>
             
             {loading&&<div className="m-2 text-slate-400 font-bold p-2 text-center">Tranzaction initated</div>}

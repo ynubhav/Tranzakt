@@ -8,8 +8,9 @@ import { toast } from 'sonner';
 
 export default function Profile(){
     const navigate=useNavigate();
-    const [retract,setretract]=useState(true);
+    const [retract,setretract]=useState(false);
     const [change,setchange]=useState(0);
+
     useEffect(()=>{
         try {
             const x=localStorage.getItem('token');
@@ -33,7 +34,7 @@ export default function Profile(){
         {retract&&<span ><div className="fixed top-0 left-0 h-screen w-[200px] bg-gray-950 border-1 border-blue-300">
             <div className="grid grid-cols-1">
                 <span onClick={()=>{setretract(!retract)}} className="border-1 border-blue-300 text-2xl text-orange-500 bg-gray-950 font-bold py-2 flex justify-center hover:cursor-pointer"><div className="inline-flex">Tranzakt.pay<div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" /></svg></div></div></span>
-                <ProfButton name={'Home'} onClick={()=>{setchange(c=>c+1)}}/>
+                <ProfButton name={'Home'} onClick={()=>{navigate('/home'); setchange(c=>c+1)}}/>
                 <ProfButton name={'Dashboard'} onClick={()=>{navigate('/dashboard');setchange(c=>c+1)}}/>
                 <ProfButton name={'Tranzactions'} onClick={()=>{setchange(c=>c+1)}}/>
                 <ProfButton name={'Get free Money'} onClick={()=>{setchange(c=>c+1)}}/>
