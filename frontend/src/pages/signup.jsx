@@ -6,6 +6,7 @@ import Warning from "../components/warning";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 export default function Signup(){
         const [username,setusername]=useState("");
@@ -14,10 +15,17 @@ export default function Signup(){
         const [firstname,setfname]=useState("");
         const [lastname,setlname]=useState("");
         const navigate=useNavigate();
+        
     return(
-        <div className="top-0 left-0 w-screen min-h-screen bg-gray-500">
+        <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4 }}
+    >
+        <div className="top-0 left-0 w-screen min-h-screen bg-gray-800">
         <div className="flex justify-center pt-10">
-        <div className="w-[350px] bg-white rounded-2xl grid grid-cols-1 shadow-2xl shadow-amber-50">
+        <div className="w-[350px] bg-gray-400 rounded-2xl grid grid-cols-1 shadow-sm">
                 <Pheader hname={'Sign Up'} hdescription={'Enter your description to sign up...'}/>
                 <Field onChange={(e)=>{setfname(e.target.value)}} fname={'First Name'} ftype={'text'} fplaceholder={'Anubhav'}/>
                 <Field onChange={(e)=>{setlname(e.target.value)}} fname={'Last Name'} ftype={'text'} fplaceholder={'Dixit'}/>
@@ -47,6 +55,7 @@ export default function Signup(){
         </div>
         </div>
         </div>
+        </motion.div>
     )
 }
 
