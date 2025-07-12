@@ -4,15 +4,23 @@ import Signup from './pages/signup'
 import Dashboard from './pages/dashboard'
 import Send from './pages/send'
 import Profile from './pages/profile'
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/home'
 import { Toaster } from 'sonner';
+import History from './pages/history'
+import Homenav from './components/homenavbar'
+import { AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 function App() {
+const online=useIsonline();
+if(!online)
+  toast.error('You are offline');
 
   return (<>
   <BrowserRouter>
+  <AnimatePresence mode="wait">
     <Routes>
       <Route path='/signin' element={<Signin/>}/>
       <Route path='/send' element={<Send/>}/>
@@ -20,13 +28,26 @@ function App() {
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/home' element={<Home/>} />
+      <Route path='/tranzaktions' element={<History/>} />
       <Route path="*" element={<Navigate to="/home" />}/>
     </Routes>
+    </AnimatePresence>
     </BrowserRouter>
     <ToastContainer/>
     <Toaster richColors  position="top-center" />
     </>
   )
+}
+
+function useIsonline(){
+  const [isonline,setonline]=useState(window.navigator.onLine);
+
+  useEffect(()=>{
+    window.addEventListener("online",()=>{setonline(true)});
+    window.addEventListener("offline",()=>{setonline(false)});
+  },[])
+
+  return isonline;
 }
 
 export default App
