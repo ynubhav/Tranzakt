@@ -76,7 +76,7 @@ userrouter.get('/bulk',async(req,res)=>{
     const filter=req.query.filter
     if(filter==='')
     {
-    const filtereddata=await User.find({});
+    const filtereddata=[];
     filtereddata.reverse();
     const xdata=filtereddata.map((data,index)=>{
         return {firstname:data.firstname,lastname:data.lastname,_id:data._id,username:data.username}
@@ -85,7 +85,7 @@ userrouter.get('/bulk',async(req,res)=>{
     }
     const filtereddata=await User.find({$or:[{firstname:filter},{lastname:filter}]});
     const xdata=filtereddata.map((data,index)=>{
-        return {firstname:data.firstname,lastname:data.lastname,_id:data._id,username:data.username}
+        return {firstname:data.firstname, lastname:data.lastname, _id:data._id, username:data.username}
     })
     res.status(200).json({users:xdata});
 })
