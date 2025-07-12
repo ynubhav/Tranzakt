@@ -3,6 +3,8 @@ import Navbar from "../components/dashnavbar";
 import axios from "axios";
 import Searchedusers from "../components/results";
 import { useNavigate } from "react-router-dom";
+import Homenav from "../components/homenavbar";
+import { motion } from "framer-motion";
 
 export default function Dashboard(){
     const [filter,setfilter]=useState('');
@@ -15,7 +17,6 @@ export default function Dashboard(){
     useEffect(()=>{
         try {
             const x=localStorage.getItem('token');
-            console.log(x);
             axios.get('http://localhost:3000/api/v1/user/me',{
             headers:{
                     Authorization:localStorage.getItem('token')
@@ -23,10 +24,8 @@ export default function Dashboard(){
             })
             .then((response)=>{setfirstname(response.data.firstname);setbalance(response.data.balance)})
             .catch((err) => {
-            console.error("Token invalid or request failed");
             navigate('/signin')});
         } catch (error) {
-            console.log('hello');
             navigate('/signin');
         }
     },[])
@@ -40,8 +39,14 @@ export default function Dashboard(){
     //get signed in user data using useeffect
 
     return(
+        <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4 }}
+    >
         <div className="bg-gray-50">
-        <Navbar user={firstname} pfplink={'johnpork.jpeg'}/>
+        <Homenav pfplink={'johnpork.jpeg'} />
         <div className="p-2 text-xl font-bold">BALANCE: $ <span className="text-gray-500">{(Math.floor(balance*100))/100}</span></div>
         <div className="p-2 text-xl font-bold">Search Users</div>
         <div className="mx-4"><input onChange={(e)=>{setfilter(e.target.value)}} type="text" placeholder="Search Users ... " className="w-1/1 rounded-xl border-2 border-slate-500 p-2"/></div>
@@ -57,6 +62,7 @@ export default function Dashboard(){
             })
         }
         </div>
+        </motion.div>
     )
 }
 
