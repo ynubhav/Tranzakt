@@ -1,5 +1,5 @@
 const express=require('express');
-const { Accounts } = require('../db');
+const { Accounts, User } = require('../db');
 const { default: mongoose } = require('mongoose');
 const { authmiddleware } = require('../middlewares');
 
@@ -24,12 +24,31 @@ try{session.startTransaction();
 const fromuserid=req.userId;
 const touserid=req.body.to;
 const amount=req.body.amount;
+const to=await User.findById(touserid).session(session);
+const from=await User.findById(fromuserid).session(session);
+const timestamp = new Date();
+
+  const toTransaction = {
+    userId: touserid,
+    credit: true,
+    amount,
+    time: timestamp,
+    firstname:from.firstname,
+  };
+  const fromTransaction = {
+    userId: fromuserid,
+    credit: false,
+    amount,
+    time: timestamp,
+    firstname:to.firstname,
+  };
+
 if(!mongoose.Types.ObjectId.isValid(fromuserid)||!mongoose.Types.ObjectId.isValid(touserid)){
     session.abortTransaction();
     return res.status(400).json({message:"invalid userid"})
 }
 
-const account=await Accounts.findOne({userId:fromuserid});
+const account=await Accounts.findOne({userId:fromuserid}).session(session);
 const balance=(account?account.balance:0);
 const senderexists=await Accounts.findOne({userId:fromuserid}).session(session);
 const recieverexists=await Accounts.findOne({userId:touserid}).session(session);
@@ -42,8 +61,8 @@ if(!senderexists||!recieverexists){
     await session.abortTransaction();
     return res.status(400).json({message:"Invalid account(s)"})
 }
-const x=await Accounts.findOneAndUpdate({userId:fromuserid},{ $inc: { balance: -amount } },{session});
-const y=await Accounts.findOneAndUpdate({userId:touserid},{ $inc: { balance:amount } },{session});
+const x=await Accounts.findOneAndUpdate({userId:fromuserid},{ $inc: { balance: -amount },$push: { transctions: fromTransaction}},{session});
+const y=await Accounts.findOneAndUpdate({userId:touserid},{ $inc: { balance:amount },$push: { transctions: toTransaction} },{session});
 
 await session.commitTransaction();
 
@@ -54,6 +73,20 @@ catch(err){
 }
 finally{session.endSession();}
 })
+
+accountrouter.get('/transactions',authmiddleware,async(req,res)=>{
+
+try{
+    const id= req.userId;
+    const account=await Accounts.findOne({userId:id});
+    res.status(200).json({transactions:account.transctions})}
+    catch(err){
+        res.status(400).json({message:"somthing went wrong"});
+    }
+
+})
+
+
 
 module.exports={
     accountrouter
