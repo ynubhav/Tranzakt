@@ -91,11 +91,59 @@ userrouter.get('/bulk',async(req,res)=>{
 })
 //=================route to get me==============//
 userrouter.get('/me',authmiddleware,async(req,res)=>{
-
+try{
     const id=req.userId;
     const user=await User.findById(id);
     const account=await Accounts.findOne({userId:id});
     res.status(200).json({firstname:user.firstname,balance:account.balance});
+}
+catch(err)
+{
+    console.log(err);
+    res.status(411).json({message:'something is wrong'});
+}
+})
+//==================route to add or remove friend===========//
+// needs friend id and firstname
+userrouter.post('/friends',authmiddleware,async(req,res)=>{
+
+    try{
+    const action=req.query.action;
+    const id=req.userId;
+    // three actions add, remove and find
+    if(action!='find'&&action!='add'&&action!='remove')
+    {    res.status(404).json({message:'undefined action'});
+     return;
+    }
+    const user=await User.findById(id).populate("friends", "firstname username");
+    const friends=user.friends;
+    if(action==='find')//find all friends username and firstname and id
+    {
+        res.status(200).json({friends:friends});
+        return
+    }
+    const body=req.body;
+    const friendid=body.userId;
+    const friendname=body.firstname;
+    if(action==='add')
+    {
+        // userId:{type :mongoose.Schema.Types.ObjectId},firstname:String
+        const x=await User.findByIdAndUpdate(id,{$addToSet:{friends:friendid}})
+        res.status(200).json({message:`added ${friendname} as friend`})
+        return
+
+    }
+    if(action==='remove')
+    {
+        const y=await User.findByIdAndUpdate(id,{$pull:{friends:friendid}})
+        res.status(200).json({message:`removed ${friendname} as friend`})
+        return
+    }
+    }
+    catch(err)
+    {
+        res.status(404).json({message:'something went wronng'});
+    }
 
 })
 module.exports=userrouter;
