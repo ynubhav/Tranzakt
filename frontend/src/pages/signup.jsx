@@ -38,7 +38,8 @@ export default function Signup(){
                         username,
                         firstname,
                         lastname,
-                        password
+                        password,
+                        friends:[]
                     })
                     toast.success('Account created succesfully!')
                      {
