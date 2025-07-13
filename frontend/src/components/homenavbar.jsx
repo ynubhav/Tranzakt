@@ -7,6 +7,13 @@ export default function Homenav({pfplink}){
     const navigate=useNavigate();
     const [islogged,setlogged]=useState(false);
     const [firstname,setfirstname]=useState('xxxxxxxx');
+    
+    const emoji=()=>{
+        const arr=['😊','😘','😍','👽','🙃','🤣','😴','😎'];
+        const ind=Math.floor(arr.length*Math.random());
+        return arr[ind];
+    }
+    const emo=emoji();
 
     useEffect(()=>{
         try {
@@ -33,7 +40,7 @@ export default function Homenav({pfplink}){
              <span className="my-2 mx-4 p-2 hover:cursor-pointer hover:bg-orange-300 hover:rounded-2xl hover:text-gray-800 hover:font-bold">Blogs</span>
              <span onClick={()=>{navigate('/dashboard')}} className="my-2 mx-4 p-2 hover:cursor-pointer hover:bg-orange-300 hover:rounded-2xl hover:text-gray-800 hover:font-bold">Dashboard</span>
              <span className="my-2 mx-4 p-2 hover:cursor-pointer hover:bg-orange-300 hover:rounded-2xl hover:text-gray-800 hover:font-bold">Plans</span>
-             {islogged&&<span className="my-2 mx-4 p-2 font-bold">Hello{' '}{firstname}{'!'}</span>}
+             {islogged&&<span className="my-2 ml-4 p-2 font-bold">Hello{' '}{firstname}{emo}</span>}
              {!islogged&&<span onClick={()=>{navigate('/signin')}} className="my-2 mx-4 p-2 hover:cursor-pointer hover:bg-orange-300 hover:rounded-2xl hover:text-gray-800 hover:font-bold">Login</span>}
             <button onClick={()=>{navigate('/profile')}}><div><img className="w-[50px] h-[50px] rounded-full border-2 mx-2 border-pink-600 hover:border-4 hover:cursor-pointer" src={pfplink} alt="pfp"/></div></button>
             </div>
