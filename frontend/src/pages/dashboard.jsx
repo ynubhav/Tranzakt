@@ -45,11 +45,11 @@ export default function Dashboard(){
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.4 }}
     >
-        <div className="bg-gray-50">
+        <div className="bg-gray-800 min-h-screen">
         <Homenav pfplink={'johnpork.jpeg'} />
-        <div className="p-2 text-xl font-bold">BALANCE: $ <span className="text-gray-500">{(Math.floor(balance*100))/100}</span></div>
-        <div className="p-2 text-xl font-bold">Search Users</div>
-        <div className="mx-4"><input onChange={(e)=>{setfilter(e.target.value)}} type="text" placeholder="Search Users ... " className="w-1/1 rounded-xl border-2 border-slate-500 p-2"/></div>
+        <div className="p-2 text-xl font-bold text-gray-400">BALANCE: $ <span className="text-white">{(Math.floor(balance*100))/100}</span></div>
+        <div className="p-2 text-xl font-bold  text-gray-400">Search Users</div>
+        <div className="mx-4"><input onChange={(e)=>{setfilter(e.target.value)}} type="text" placeholder="Search Users ... " className="w-1/1 rounded-xl border-2 text-gray-400 border-slate-500 p-2"/></div>
         {
             filteredusers.map((data,index)=>{
                 const firstname=data.firstname;
