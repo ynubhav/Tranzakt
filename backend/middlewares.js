@@ -14,11 +14,15 @@ function authmiddleware(req,res,next){
     //req.firstname=verify.firstname;
     next();
     } catch (error) {
-        res.status(403).json({message: "invalid token"})
+        res.status(403).json({message: " invalid token"})
     }
     }
     else
-    res.status(403).json({message: "invalid token"})
+   { if(check)
+    res.status(401).json({message: "invalid token"})
+    else
+    res.status(402).json({message: "invalid token"})
+}
 }
 
 module.exports={
