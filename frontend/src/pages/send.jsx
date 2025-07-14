@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 export default function Send(){
     const [queries]=useSearchParams();
     const [userid,setuserid]=useState('');
+    const [username,setusername]=useState('');
     const [reciever,setreciever]=useState('');
     const [paymentdone,setsucces]=useState(false);
     const [intransition,settransition]=useState(false);
@@ -17,6 +18,7 @@ export default function Send(){
     const navigate=useNavigate();
 
     useEffect(()=>{setreciever(queries.get('firstname'));
+    setusername(queries.get('username'));
     setuserid(queries.get('userid'));},[queries])
     // console.log(reciever);
     //=======validating if logged in===========//
@@ -50,9 +52,10 @@ export default function Send(){
         <div className="flex justify-center">
         <div className="grid grid-cols-1 w-[350px] rounded-2xl bg-white mt-10">
             <Pheader hname={'Send Money'} hdescription={'Tranzakt safely ❤️'}/>
-            <div className="p-2 mx-2 font-bold">To :{' '}<span className="text-gray-700 font-bold">{reciever}</span></div>
+            <div className="px-2 py-1 mx-2 font-bold">To :{' '}<span className="text-gray-700 font-bold">{reciever}</span></div>
+            <div className="px-2 py-1 mx-2 font-bold">Username :{' '}<span className="text-gray-700 font-bold">{username}</span></div>
             <Field fname={'Amount ($)'} fplaceholder={'Enter Amount'} ftype={'Number'}  onChange={(e)=>{settransition(false);setsucces(false);if((((e.target.value)*100)%1==0))setamt(e.target.value)}}/>
-            <Button name={'Initiate Tranzaction'} onClick={async()=>{
+            {!loading&&<Button name={'Initiate Tranzaction'} onClick={async()=>{
                 if(!reciever)
                     navigate('/dashboard');
                 if(amount<=0)
@@ -85,7 +88,7 @@ export default function Send(){
             setTimeout(() => {
             setloading(false);
             }, 1500);
-            }}/>
+            }}/>}
             
             {loading&&<div className="m-2 text-slate-400 font-bold p-2 text-center">Tranzaction initated</div>}
             {!loading&&paymentdone&&intransition&&<><div className="m-2 text-green-400 font-bold p-2 text-center">Transfer of Amount $ {amount} to {reciever} {' Succesfull'}</div><Button name={'Go back'} onClick={()=>{navigate('/dashboard')}}/></>}

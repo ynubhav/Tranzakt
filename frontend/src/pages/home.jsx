@@ -12,9 +12,11 @@ export default function Home(){
       transition={{ duration: 0.4 }}
     ><>
   <div className="min-h-screen bg-gray-800">
-    <Homenav pfplink={'johnpork.jpeg'} />
-    <LandingPage/>
-    <div className="flex bg-gray-950 text-white">Pages</div>
+    <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow"><Homenav pfplink={'johnpork.jpeg'} /></div>
+    <div className="mt-[64px] overflow-y-auto"><LandingPage/></div>
+    <div className="flex bg-gray-950 text-white p-2">
+      <p>Pages</p>
+    </div>
   </div>
 </>
 </motion.div>
