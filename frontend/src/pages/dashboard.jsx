@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/dashnavbar";
 import axios from "axios";
 import Searchedusers from "../components/results";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import Homenav from "../components/homenavbar";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 export default function Dashboard(){
     const [filter,setfilter]=useState('');
@@ -12,7 +13,9 @@ export default function Dashboard(){
     const [firstname,setfirstname]=useState('User');
     const navigate=useNavigate();
     const [filteredusers,setfilteredusers]=useState([]);
+    const [friendarr,setfriendarr]=useState([]);
     const dbdfilter=useDebounce(filter);
+    const [reload,setreload]=useState(true);
 
     useEffect(()=>{
         try {
@@ -31,12 +34,23 @@ export default function Dashboard(){
     },[])
 
     useEffect(()=>{
+        try {
+            const x=localStorage.getItem('token');
+            axios.post('http://localhost:3000/api/v1/user/friends?action=find',{},{
+            headers:{
+                    Authorization:localStorage.getItem('token')
+                }
+            })
+            .then((response)=>{setfriendarr(response.data.friends);toast.success('fetched friends')})
+        } catch (error) {
+            toast.error("couldn't fetch friends");
+        }
+    },[reload])
+
+    useEffect(()=>{
        axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${filter}`)
        .then((response)=>{setfilteredusers(response.data.users)})
     },[dbdfilter]);
-    //get signed in user info
-
-    //get signed in user data using useeffect
 
     return(
         <motion.div
@@ -55,10 +69,56 @@ export default function Dashboard(){
                 const firstname=data.firstname;
                 const lastname=data.lastname;
                 const username=data.username;
-                console.log(username);
+                const friendid=data._id;
                 if(index>9)
                     return;
-                return(<Searchedusers key={index} firstname={firstname} lastname={lastname} username={username} onClick={()=>{navigate('/send?userid='+data._id+'&firstname='+firstname)}}/>)
+                return(<Searchedusers 
+                    key={index}
+                    firstname={firstname} 
+                    lastname={lastname} 
+                    username={username} 
+                    button1={'Add'}
+                    onClick1={()=>{navigate('/send?userid='+data._id+'&firstname='+firstname+'&username='+username)}}
+                    onClick2={()=>{
+                        
+                        try{axios.post('http://localhost:3000/api/v1/user/friends?action=add',{userId:friendid,firstname:firstname},{headers:{Authorization:localStorage.getItem('token')}})
+                        .then((response)=>{
+                            toast.success(`added ${firstname} to friends`)
+                            setreload(c=>!c);
+                        })}
+                        catch(err){
+                            toast.error("couldn't add friend");
+                        }
+                    }}
+                    />)
+            })
+        }
+        <div className="p-2 text-xl font-bold  text-gray-400">Friends</div>
+            {
+            friendarr.map((data,index)=>{
+                const firstname=data.firstname;
+                const lastname=data.lastname;
+                const username=data.username;
+                const id=data._id;
+                return(<Searchedusers 
+                    key={index}
+                    firstname={firstname} 
+                    lastname={lastname} 
+                    username={username} 
+                    button1={'Remove'}
+                    onClick1={()=>{navigate('/send?userid='+data._id+'&firstname='+firstname+'&username='+username)}}
+                    onClick2={()=>{
+                        
+                        try{axios.post('http://localhost:3000/api/v1/user/friends?action=remove',{userId:id,firstname:firstname},{headers:{Authorization:localStorage.getItem('token')}})
+                        .then((response)=>{
+                            toast.success(`removed ${firstname} from friends`)
+                            setreload(c=>!c);
+                        })}
+                        catch(err){
+                            toast.error("couldn't remove friend");
+                        }
+                    }}
+                    />)
             })
         }
         </div>
