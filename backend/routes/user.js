@@ -115,16 +115,16 @@ userrouter.post('/friends',authmiddleware,async(req,res)=>{
     {    res.status(404).json({message:'undefined action'});
      return;
     }
-    const user=await User.findById(id).populate("friends", "firstname username");
+    const user=await User.findById(id).populate("friends", "firstname lastname username _id");
     const friends=user.friends;
     if(action==='find')//find all friends username and firstname and id
     {
         res.status(200).json({friends:friends});
         return
     }
-    const body=req.body;
-    const friendid=body.userId;
-    const friendname=body.firstname;
+    const data=req.body;
+    const friendid=data.userId;
+    const friendname=data.firstname;
     if(action==='add')
     {
         // userId:{type :mongoose.Schema.Types.ObjectId},firstname:String
