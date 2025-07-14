@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function History(){
   const [transactions,settrans]=useState([]);
+  const [spent,setspent]=useState(0);
+  const [earn,setearn]=useState(0);
   const navigate=useNavigate();
 
   useEffect(()=>{
@@ -16,7 +18,9 @@ export default function History(){
                 }}
       )
       .then((response)=>{
-        settrans(response.data.transactions)
+        const data=response.data.transactions
+        // data.reverse()
+        settrans(data);
       })
     } catch (error) {
       console.log('err');
@@ -24,7 +28,19 @@ export default function History(){
     }
   },[])
 
+  useEffect(()=>{
+    setearn(0);
+    setspent(0);
+    transactions.map((data,index)=>{
+    if(data.credit)
+      setearn(c=>c+data.amount)
+    else
+      setspent(c=>c+data.amount)
+    })
+  },[transactions])
+
     return(
+      
         <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -32,9 +48,17 @@ export default function History(){
       transition={{ duration: 0.4 }}
     >
     <>
-    <Homenav pfplink={'johnpork.jpeg'}/>
-    <div className="text-2xl font-bold p-2">Transaction History and spendings graph</div>
-    <div className="grid grid-cols-2 gap-2 m-4">
+    <div className="min-h-screen bg-gray-800">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow"><Homenav pfplink={'johnpork.jpeg'}/></div>
+    <div className="mt-[64px] overflow-y-auto flex-1 p-4">
+    <div className="text-2xl font-bold p-2 text-white">Transaction History and spendings graph</div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ">
+    <div className="grid grid-cols-1 gap-2 m-4">
+    <div className="text-xl text-white font-bold p-2 flex justify-left gap-10">
+      Summary :
+      <div className="text-green-300">+ ${earn}{' '}</div>
+      <div className="text-red-300">- ${spent}</div>
+    </div>
       {
       transactions.map((data,index)=>{
         const firstname=data.firstname
@@ -42,17 +66,20 @@ export default function History(){
         const amount=data.amount
         const localTime = new Date(data.time).toLocaleString().split(', ');
       return(
-        <div className="bg-gray-500 rounded-2xl p-2 gap-0.5 mt-1">
-          <p>{localTime[0]}</p>
-          <p>{localTime[1]}</p>
-          <p>{firstname}</p>
-          <p>{recieved?'🟢':'🔴'} $ {''}{amount}</p>
+        <div key={index} className={`text-white grid grid-cols-2 rounded-2xl p-2 gap-0.5 mt-1 bg-gray-950 border-2 ${(recieved)?'border-green-500':'border-red-500'}`}>
+          <p className="text-xl font-medium">$ {''}{amount}</p>
+          <p className="text-right">Date:{' '}{localTime[0]}</p>
+          <p>{(recieved)?'From : ':'To : '}{firstname}</p>
+          <p className="text-right">Time:{' '}{localTime[1]}</p>
         </div>
       )
       })
     }
     </div>
-    
+    <div className="text-2xl font-bold text-white">Graphs</div>
+    </div>
+    </div>
+    </div>
 </>
 </motion.div>
 )}
