@@ -29,12 +29,7 @@ export default function Profile(){
     },[])
 
     return(
-      <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-    ><div className="min-h-screen bg-gray-800">
+      <div className="min-h-screen bg-gray-800">
         <div className={`top-0 left-0 w-screen h-screen bg-gray-800 text-amber-50 text-9xl ml-[200px]`}> Hello </div>
         {!retract&&<span ><div className="fixed top-0 left-0 h-screen w-[200px] bg-gray-950">
             <div className="grid grid-cols-1">
@@ -60,7 +55,6 @@ export default function Profile(){
             </div>
             </span>}
         </div>
-</motion.div>
     )
 }
 

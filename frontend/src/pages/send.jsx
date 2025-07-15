@@ -42,12 +42,6 @@ export default function Send(){
     //=========================================//
     const [amount,setamt]=useState(0);
     return(
-        <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-    >
         <div className="fixed top-0 left-0 w-screen h-screen  bg-gray-700">
         <div className="flex justify-center">
         <div className="grid grid-cols-1 w-[350px] rounded-2xl bg-white mt-10">
@@ -96,7 +90,6 @@ export default function Send(){
         </div>
         </div>
         </div>
-        </motion.div>
     )
 }
 

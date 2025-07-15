@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
+import Homenav from "../components/homenavbar";
 
 export default function Signup(){
         const [username,setusername]=useState("");
@@ -17,22 +18,18 @@ export default function Signup(){
         const navigate=useNavigate();
         
     return(
-        <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-    >
-        <div className="top-0 left-0 w-screen min-h-screen bg-gray-800">
+        <div className=" min-h-screen bg-gray-800">
+        <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow"><Homenav pfplink={'johnpork.jpeg'} /></div>
+        <div className="mt-[64px] overflow-y-auto">
         <div className="flex justify-center pt-10">
-        <div className="w-[350px] bg-gray-400 rounded-2xl grid grid-cols-1 shadow-sm">
+        <div className="w-[350px] bg-gray-50 rounded-2xl grid grid-cols-1 shadow-sm">
                 <Pheader hname={'Sign Up'} hdescription={'Enter your description to sign up...'}/>
                 <Field onChange={(e)=>{setfname(e.target.value)}} fname={'First Name'} ftype={'text'} fplaceholder={'Anubhav'}/>
                 <Field onChange={(e)=>{setlname(e.target.value)}} fname={'Last Name'} ftype={'text'} fplaceholder={'Dixit'}/>
                 <Field onChange={(e)=>{setusername(e.target.value)}} fname={'Email'} ftype={'text'} fplaceholder={'anubhav@xyzmail.com'}/>
-                <Field onChange={(e)=>{setinitpass(e.target.value)}} fname={'Password'} ftype={'password'} fplaceholder={'P@s$w0rD'}/>
-                <Field onChange={(e)=>{setpass(e.target.value)}} fname={'Confirm Password'} ftype={'password'} fplaceholder={'P@s$w0rD'}/>
-                {initpass===password&&(password.length>5)&&<Button onClick={async()=>{
+                <Field onChange={(e)=>{setinitpass(e.target.value)}} fname={'Password'} ftype={'password'} fplaceholder={'*******'}/>
+                <Field onChange={(e)=>{setpass(e.target.value)}} fname={'Confirm Password'} ftype={'password'} fplaceholder={'*******'}/>
+                {initpass===password&&(password.length>5)&&username&&firstname&&lastname&&<Button onClick={async()=>{
                    try{
                     const response=await axios.post("http://localhost:3000/api/v1/user/signup",{
                         username,
@@ -48,7 +45,7 @@ export default function Signup(){
                     }
                 }
                 catch(err){
-                        toast.error('Input(s) incomplete')
+                        toast.error('Email already taken')
                     }
 
                 }} name={'Sign Up'}/>}
@@ -56,7 +53,7 @@ export default function Signup(){
         </div>
         </div>
         </div>
-        </motion.div>
+        </div>
     )
 }
 
