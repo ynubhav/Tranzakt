@@ -19,7 +19,7 @@ export default function History(){
       )
       .then((response)=>{
         const data=response.data.transactions
-        // data.reverse()
+        data.reverse()
         settrans(data);
       })
     } catch (error) {
@@ -40,13 +40,6 @@ export default function History(){
   },[transactions])
 
     return(
-      
-        <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-    >
     <>
     <div className="min-h-screen bg-gray-800">
     <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow"><Homenav pfplink={'johnpork.jpeg'}/></div>
@@ -81,5 +74,4 @@ export default function History(){
     </div>
     </div>
 </>
-</motion.div>
 )}
