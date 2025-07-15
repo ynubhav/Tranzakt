@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { TrendingUp, ShieldCheck, Tag, Smartphone } from "lucide-react";
 
+const MotionLink = motion(Link);
 // ---------- Animation Variants ---------- //
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -71,10 +73,10 @@ export default function LandingPage() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          Track every rupee, smash your savings goals, flex on your past self.
+          Track every cent, smash your savings goals, flex on your past self.
         </motion.p>
-        <motion.a
-          href="#get-started"
+        <MotionLink
+          to="/signup"
           className="mt-10 inline-block px-8 py-3 rounded-2xl bg-indigo-500 font-semibold hover:bg-indigo-600 active:scale-95 transition"
           variants={fadeUp}
           custom={3}
@@ -83,7 +85,7 @@ export default function LandingPage() {
           viewport={{ once: true }}
         >
           Get Started Free →
-        </motion.a>
+        </MotionLink>
 
         {/* Hero Mockup Image */}
         <motion.img
