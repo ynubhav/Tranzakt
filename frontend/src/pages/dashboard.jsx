@@ -53,12 +53,6 @@ export default function Dashboard(){
     },[dbdfilter]);
 
     return(
-        <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-    >
         <div className="bg-gray-800 min-h-screen">
         <Homenav pfplink={'johnpork.jpeg'} />
         <div className="p-2 text-xl font-bold text-gray-400">BALANCE: $ <span className="text-white">{(Math.floor(balance*100))/100}</span></div>
@@ -93,6 +87,7 @@ export default function Dashboard(){
                     />)
             })
         }
+        {filteredusers.length===0&&filter&&<div className="text-center text-xl mt-10 font-bold  text-gray-400">No Matches Found {':('} try using User email</div>}
         <div className="p-2 text-xl font-bold  text-gray-400">Friends</div>
             {
             friendarr.map((data,index)=>{
@@ -107,22 +102,12 @@ export default function Dashboard(){
                     username={username} 
                     button1={'Remove'}
                     onClick1={()=>{navigate('/send?userid='+data._id+'&firstname='+firstname+'&username='+username)}}
-                    onClick2={()=>{
-                        
-                        try{axios.post('http://localhost:3000/api/v1/user/friends?action=remove',{userId:id,firstname:firstname},{headers:{Authorization:localStorage.getItem('token')}})
-                        .then((response)=>{
-                            toast.success(`removed ${firstname} from friends`)
-                            setreload(c=>!c);
-                        })}
-                        catch(err){
-                            toast.error("couldn't remove friend");
-                        }
-                    }}
+                    onClick2={()=>{handleremovefriend({firstname,id,setreload})}}
                     />)
             })
         }
+        {friendarr.length===0&&<div className="text-center text-xl mt-10 font-bold  text-gray-400">No Friends {':('}</div>}
         </div>
-        </motion.div>
     )
 }
 
@@ -144,3 +129,29 @@ function useDebounce(value){
     return dbdvalue;
 }
 //============================================//
+function handleremovefriend({firstname,id,setreload}) {
+  toast("Are you sure you want to remove?", {
+    action: {
+      label: "Yes",
+      onClick: () => {
+        // 🔥 Real logout logic here
+        toast.dismiss();
+        try{axios.post('http://localhost:3000/api/v1/user/friends?action=remove',{userId:id,firstname:firstname},{headers:{Authorization:localStorage.getItem('token')}})
+                        .then((response)=>{
+                            toast.success(`removed ${firstname} from friends`)
+                            setreload(c=>!c);
+                        })}
+                        catch(err){
+                            toast.error("couldn't remove friend");
+                        }
+        
+      },
+    },
+    cancel: {
+      label: "Cancel",
+      onClick: ()=>{
+        toast.dismiss();
+      }
+    },
+  });
+}
