@@ -83,7 +83,7 @@ userrouter.get('/bulk',async(req,res)=>{
     })
      return res.status(200).json({users:xdata});
     }
-    const filtereddata=await User.find({$or:[{firstname:filter},{lastname:filter}]});
+    const filtereddata=await User.find({$or:[{firstname:filter},{lastname:filter},{username:filter}]});
     const xdata=filtereddata.map((data,index)=>{
         return {firstname:data.firstname, lastname:data.lastname, _id:data._id, username:data.username}
     })
