@@ -11,7 +11,7 @@ return(<><div className="mx-2">
         </div>
         {rendermore&&<More username={username} lastname={lastname}/>}
             <div className="flex gap-1">
-                {<button onClick={onClick2} className="bg-black  text-white font-medium py-2 px-4 rounded-md hover:bg-gray-500 hover:cursor-pointer">{button1} friend</button>}
+                {rendermore&&<button onClick={onClick2} className="bg-black  text-white font-medium py-2 px-4 rounded-md hover:bg-gray-500 hover:cursor-pointer">{button1} friend</button>}
                 <button onClick={onClick1} className="bg-black  text-white font-medium py-2 px-4 rounded-md hover:bg-gray-500 hover:cursor-pointer">Send Money</button>
             </div>
         </span>
