@@ -4,10 +4,11 @@ import Signup from './pages/signup'
 import Dashboard from './pages/dashboard'
 import Send from './pages/send'
 import Profile from './pages/profile'
-import { toast, ToastContainer } from 'react-toastify';
+import {ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/home'
 import { Toaster } from 'sonner';
+import { toast } from "sonner";
 import History from './pages/history'
 import Homenav from './components/homenavbar'
 import { AnimatePresence } from 'framer-motion'
@@ -17,7 +18,8 @@ function App() {
 const online=useIsonline();
 if(!online)
   toast.error('You are offline');
-
+else
+  toast.success('Connected')
   return (<>
   <BrowserRouter>
   <AnimatePresence mode="wait">

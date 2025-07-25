@@ -37,6 +37,8 @@ export default function History(){
     else
       setspent(c=>c+data.amount)
     })
+    setearn(c=>((Math.floor(c*100))/100))
+    setspent(c=>((Math.floor(c*100))/100))
   },[transactions])
 
     return(
@@ -59,7 +61,7 @@ export default function History(){
         const amount=data.amount
         const localTime = new Date(data.time).toLocaleString().split(', ');
       return(
-        <div key={index} className={`text-white grid grid-cols-2 rounded-2xl p-2 gap-0.5 mt-1 bg-gray-950 border-2 ${(recieved)?'border-green-500':'border-red-500'}`}>
+        <div key={index} className={`text-white grid grid-cols-2 rounded-2xl p-2 gap-0.5 mt-1 bg-gray-950 border-2 ${(recieved)?'border-green-500 hover:bg-green-950 hover:shadow-sm hover:shadow-green-300':'border-red-500 hover:bg-red-950 hover:shadow-sm hover:shadow-red-300'}`}>
           <p className="text-xl font-medium">$ {''}{amount}</p>
           <p className="text-right">Date:{' '}{localTime[0]}</p>
           <p>{(recieved)?'From : ':'To : '}{firstname}</p>

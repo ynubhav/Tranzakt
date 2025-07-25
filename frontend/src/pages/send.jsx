@@ -4,7 +4,7 @@ import Pheader from "../components/pageheader";
 import Button from "../components/button";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { motion } from "framer-motion";
 
 export default function Send(){
@@ -49,6 +49,9 @@ export default function Send(){
             <div className="px-2 py-1 mx-2 font-bold">To :{' '}<span className="text-gray-700 font-bold">{reciever}</span></div>
             <div className="px-2 py-1 mx-2 font-bold">Username :{' '}<span className="text-gray-700 font-bold">{username}</span></div>
             <Field fname={'Amount ($)'} fplaceholder={'Enter Amount'} ftype={'Number'}  onChange={(e)=>{settransition(false);setsucces(false);if((((e.target.value)*100)%1==0))setamt(e.target.value)}}/>
+            {loading&&<div className="m-2 text-slate-400 font-bold p-2 text-center">Tranzaction initated</div>}
+            {!loading&&paymentdone&&intransition&&<><div className="m-2 text-green-400 font-bold p-2 text-center">Transfer of Amount $ {amount} to {reciever} {' Succesfull'}</div><Button name={'Go back'} onClick={()=>{navigate('/dashboard')}}/></>}
+            {!loading&&!paymentdone&&intransition&&<><div className="m-2 text-red-400 font-bold p-2 text-center">Transfer Failed</div><Button name={'Go back'} onClick={()=>{navigate('/dashboard')}}/></>}
             {!loading&&<Button name={'Initiate Tranzaction'} onClick={async()=>{
                 if(!reciever)
                     navigate('/dashboard');
@@ -84,9 +87,6 @@ export default function Send(){
             }, 1500);
             }}/>}
             
-            {loading&&<div className="m-2 text-slate-400 font-bold p-2 text-center">Tranzaction initated</div>}
-            {!loading&&paymentdone&&intransition&&<><div className="m-2 text-green-400 font-bold p-2 text-center">Transfer of Amount $ {amount} to {reciever} {' Succesfull'}</div><Button name={'Go back'} onClick={()=>{navigate('/dashboard')}}/></>}
-            {!loading&&!paymentdone&&intransition&&<><div className="m-2 text-red-400 font-bold p-2 text-center">Transfer Failed</div><Button name={'Go back'} onClick={()=>{navigate('/dashboard')}}/></>}
         </div>
         </div>
         </div>
@@ -96,7 +96,7 @@ export default function Send(){
 //===========================//
 const handleTransaction = () => {
   toast.info("⏳ Transaction initiated...", {
-    position: "top-right",
+    position: "bottom-right",
     autoClose: true,       // stays until you update or dismiss it
     closeOnClick: false,
     draggable: false,
