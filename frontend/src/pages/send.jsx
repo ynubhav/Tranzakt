@@ -75,10 +75,9 @@ export default function Send(){
             {toast.success('Tranzaktion succesful');setsucces(true);}
             }
            else
-           { toast.clearWaitingQueue(); 
+           { //toast.clearWaitingQueue(); 
             toast.error('Transaction failed!'); setsucces(false);}}
-            catch(err){
-            toast.clearWaitingQueue(); 
+            catch(err){ 
             toast.error('Transaction failed!');
              setsucces(false);   
             }
