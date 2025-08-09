@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import Homenav from "../components/homenavbar";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Signin() {
   const [username, setusername] = useState("");
@@ -51,7 +52,7 @@ export default function Signin() {
               setloading(true);
               try {
                 const response = await axios.post(
-                  "http://localhost:3000/api/v1/user/signin",
+                  `${apiUrl}/user/signin`,
                   {
                     username,
                     password,

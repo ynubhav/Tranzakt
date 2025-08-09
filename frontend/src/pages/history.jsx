@@ -3,6 +3,7 @@ import Homenav from "../components/homenavbar";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function History(){
   const [transactions,settrans]=useState([]);
@@ -12,7 +13,7 @@ export default function History(){
 
   useEffect(()=>{
     try {
-      axios.get('http://localhost:3000/api/v1/account/transactions',{
+      axios.get(`${apiUrl}/account/transactions`,{
             headers:{
                     Authorization:localStorage.getItem('token')
                 }}
@@ -37,8 +38,8 @@ export default function History(){
     else
       setspent(c=>c+data.amount)
     })
-    setearn(c=>((Math.floor(c*100))/100))
-    setspent(c=>((Math.floor(c*100))/100))
+    setearn(c=>(c.toFixed(2)))
+    setspent(c=>(c.toFixed(2)))
   },[transactions])
 
     return(

@@ -12,6 +12,7 @@ import Homenav from './components/homenavbar'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import './index.css'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function App() {
 const online=useIsonline();

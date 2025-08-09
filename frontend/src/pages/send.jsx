@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Send() {
   const [queries] = useSearchParams();
@@ -40,7 +41,7 @@ export default function Send() {
     try {
       handleTransactiontoast();
       const response = await axios.post(
-        "http://localhost:3000/api/v1/account/transfer",
+        `${apiUrl}/account/transfer`,
         {
           to: userid,
           amount,
@@ -82,7 +83,7 @@ export default function Send() {
     try {
       const x = localStorage.getItem("token");
       axios
-        .get("http://localhost:3000/api/v1/user/me", {
+        .get(`${apiUrl}/user/me`, {
           headers: {
             Authorization: localStorage.getItem("token"),
           },

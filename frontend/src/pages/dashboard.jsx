@@ -6,6 +6,7 @@ import { data, useNavigate } from "react-router-dom";
 import Homenav from "../components/homenavbar";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Dashboard() {
   const [filter, setfilter] = useState("");
@@ -22,7 +23,7 @@ export default function Dashboard() {
     try {
       const x = localStorage.getItem("token");
       axios
-        .get("http://localhost:3000/api/v1/user/me", {
+        .get(`${apiUrl}/user/me`, {
           headers: {
             Authorization: localStorage.getItem("token"),
           },
@@ -48,7 +49,7 @@ export default function Dashboard() {
       const x = localStorage.getItem("token");
       axios
         .post(
-          "http://localhost:3000/api/v1/user/friends?action=find",
+          `${apiUrl}/user/friends?action=find`,
           {},
           {
             headers: {
@@ -66,7 +67,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/v1/user/bulk?filter=${filter}`)
+      .get(`${apiUrl}/user/bulk?filter=${filter}`)
       .then((response) => {
         setfilteredusers(response.data.users);
       });
@@ -146,7 +147,7 @@ export default function Dashboard() {
                     try {
                       axios
                         .post(
-                          "http://localhost:3000/api/v1/user/friends?action=add",
+                          `${apiUrl}/user/friends?action=add`,
                           { userId: friendid, firstname: firstname },
                           {
                             headers: {
@@ -245,7 +246,7 @@ function handleremovefriend({ firstname, id, setreload }) {
         try {
           axios
             .post(
-              "http://localhost:3000/api/v1/user/friends?action=remove",
+              `${apiUrl}/user/friends?action=remove`,
               { userId: id, firstname: firstname },
               { headers: { Authorization: localStorage.getItem("token") } }
             )

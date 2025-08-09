@@ -2,6 +2,7 @@ import Homenav from "../components/homenavbar";
 import LandingPage from "../components/landing";
 import Profile from "./profile";
 import { motion } from "framer-motion";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Home(){
     return(

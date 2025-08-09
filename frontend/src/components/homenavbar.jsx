@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Homenav({ pfplink }) {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function Homenav({ pfplink }) {
     try {
       const x = localStorage.getItem("token");
       axios
-        .get("http://localhost:3000/api/v1/user/me", {
+        .get(`${apiUrl}/user/me`, {
           headers: {
             Authorization: localStorage.getItem("token"),
           },
