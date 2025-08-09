@@ -10,7 +10,9 @@ const app = express();
 
 app.use(cors());
 app.use("/api/v1", router);
-
+app.use((req, res) => {
+  res.send("Server Live");
+});
 app.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);
 });
