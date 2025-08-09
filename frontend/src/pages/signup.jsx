@@ -9,52 +9,199 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import Homenav from "../components/homenavbar";
 
-export default function Signup(){
-        const [username,setusername]=useState("");
-        const [password,setpass]=useState("-");
-        const [initpass,setinitpass]=useState("");
-        const [firstname,setfname]=useState("");
-        const [lastname,setlname]=useState("");
-        const navigate=useNavigate();
-        
-    return(
-        <div className=" min-h-screen bg-gray-800">
-        <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow"><Homenav pfplink={'johnpork.jpeg'} /></div>
-        <div className="mt-[64px] overflow-y-auto">
-        <div className="flex justify-center pt-10">
-        <div className="w-1/1 mx-4 mb-4 bg-gray-50 rounded-2xl grid grid-cols-1 shadow-sm">
-                <Pheader hname={'Sign Up'} hdescription={'Enter your description to sign up...'}/>
-                <Field onChange={(e)=>{setfname(e.target.value)}} fname={'First Name*'} ftype={'text'} fplaceholder={'name'}/>
-                <Field onChange={(e)=>{setlname(e.target.value)}} fname={'Last Name'} ftype={'text'} fplaceholder={'lastname'}/>
-                <Field onChange={(e)=>{setusername(e.target.value)}} fname={'Email*'} ftype={'text'} fplaceholder={'name@email.com'}/>
-                <Field onChange={(e)=>{setinitpass(e.target.value)}} fname={'Password*'} ftype={'password'} fplaceholder={'*******'}/>
-                <Field onChange={(e)=>{setpass(e.target.value)}} fname={'Confirm Password*'} ftype={'password'} fplaceholder={'*******'}/>
-                {initpass===password&&(password.length>5)&&username&&firstname&&lastname&&<Button onClick={async()=>{
-                   try{
-                    const response=await axios.post("http://localhost:3000/api/v1/user/signup",{
+export default function Signup() {
+  const [username, setusername] = useState("");
+  const [password, setpass] = useState("-");
+  const [initpass, setinitpass] = useState("");
+  const [firstname, setfname] = useState("");
+  const [lastname, setlname] = useState("");
+  const [passtype, setpasstype] = useState("password");
+  const [loading,setloading]=useState(false);
+  const navigate = useNavigate();
+
+  const togglepass = () => {
+    if (passtype === "password") setpasstype("text");
+    if (passtype === "text") setpasstype("password");
+    return passtype;
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      {/* Navbar */}
+      <div className="fixed top-0 left-0 right-0  bg-white shadow-md">
+        <Homenav pfplink={"johnpork.jpeg"} />
+      </div>
+
+      {/* Page Content */}
+      <div className="mt-12 flex justify-center items-center px-4 py-8">
+        <div className="w-full max-w-lg bg-black shadow-white rounded-2xl shadow-sm mt-6">
+          <Pheader
+            hname={"Sign Up"}
+            hdescription={"Enter your details to sign up"}
+          />
+
+          {/* First Name */}
+          <Field
+            onChange={(e) => {
+              setfname(e.target.value);
+            }}
+            fname={"First Name*"}
+            ftype={"text"}
+            fplaceholder={"John"}
+          />
+
+          {/* Last Name */}
+          <Field
+            onChange={(e) => {
+              setlname(e.target.value);
+            }}
+            fname={"Last Name"}
+            ftype={"text"}
+            fplaceholder={"Doe"}
+          />
+
+          {/* Email */}
+          <Field
+            onChange={(e) => {
+              setusername(e.target.value);
+            }}
+            fname={"Email*"}
+            ftype={"email"}
+            fplaceholder={"name@email.com"}
+          />
+
+          {/* Password */}
+          <div className="flex">
+            <div className="w-full">
+              <Field
+                onChange={(e) => {
+                  setpass(e.target.value);
+                }}
+                fname={"Password*"}
+                ftype={passtype}
+              />
+            </div>
+            <div className="flex items-center justify-center pr-2 pb-2 pt-9  ">
+              <button onClick={togglepass}>
+                {passtype === "text" ? (
+                  <svg
+                    className="w-6 h-6 text-gray-300 hover:bg-gray-700 rounded-lg transition"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-6 h-6 text-gray-300 hover:bg-gray-700 rounded-lg transition"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                  </svg>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Sign Up Button */}
+            <div className="mx-5 my-2">
+              <button
+                onClick={async () => {
+                    if(loading)
+                        return
+                  if (!(password.length > 5 && username && firstname && lastname)) {
+                    toast.warning("Field Required");
+                    return;
+                  }
+                  setloading(true);
+                  try {
+                    const response = await axios.post(
+                      "http://localhost:3000/api/v1/user/signup",
+                      {
                         username,
                         firstname,
                         lastname,
                         password,
-                        friends:[]
-                    })
-                    toast.success('Account created succesfully!')
-                     {
-                    localStorage.setItem("token",response.data.token)
-                    navigate('/dashboard')
+                        friends: [],
+                      }
+                    );
+                    setTimeout(() => {
+                        setloading(false)
+                        toast.success("Account created successfully!");
+                    {
+                      localStorage.setItem("token", response.data.token);
+                      navigate("/dashboard");
                     }
-                }
-                catch(err){
-                        toast.error('Email already taken')
-                    }
+                    }, 500);
+                  } catch (err) {
+                    setloading(false)
+                    toast.error("Email already taken");
+                  }
+                }}
+                className="flex justify-center w-full bg-orange-500 rounded-xl py-2 hover:bg-gray-700 hover:cursor-pointer"
+              >
+                {
+              loading ? (
+                <div className="flex justify-center">
+                  <div role="status">
+                    <svg
+                      aria-hidden="true"
+                      class="w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-gray-400"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              ) : (
+                "Sign Up"
+              )
+            }
+              </button>
+            </div>
 
-                }} name={'Sign Up'}/>}
-                <Warning description={'Already have an account '} topage={'Login'} onClick={()=>{navigate('/signin')}}/>
+          {/* Warning */}
+          <div className="">
+            <Warning
+              description={"Already have an account?"}
+              topage={"Login"}
+              onClick={() => {
+                navigate("/signin");
+              }}
+            />
+          </div>
         </div>
-        </div>
-        </div>
-        </div>
-    )
+      </div>
+    </div>
+  );
 }
-
- 
