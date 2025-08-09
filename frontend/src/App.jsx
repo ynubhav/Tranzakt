@@ -4,8 +4,6 @@ import Signup from './pages/signup'
 import Dashboard from './pages/dashboard'
 import Send from './pages/send'
 import Profile from './pages/profile'
-import {ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/home'
 import { Toaster } from 'sonner';
 import { toast } from "sonner";
@@ -13,6 +11,7 @@ import History from './pages/history'
 import Homenav from './components/homenavbar'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import './index.css'
 
 function App() {
 const online=useIsonline();
@@ -35,8 +34,7 @@ else
     </Routes>
     </AnimatePresence>
     </BrowserRouter>
-    <ToastContainer position="bottom-right"/>
-    <Toaster richColors  position="bottom-right" />
+    <Toaster richColors  position="bottom-right" theme='dark'/>
     </>
   )
 }
