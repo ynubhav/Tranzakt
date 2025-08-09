@@ -1,9 +1,12 @@
-export default function ProfButton({name,onClick}){
-    return(
-        <div className='grid grid-cols-1'>
-            <button onClick={onClick} className= "rounded-xl py-2 pl-4 hover:bg-gray-700 hover:transition text-white text-left mx-5 mb-4 mt-2 cursor-pointer">
-            {name}
-        </button>
-        </div>
-    )
+export default function ProfButton({ name, onClick }) {
+  return (
+    <div className="flex w-full">
+      <button
+        onClick={onClick}
+        className="flex items-center gap-3 w-full rounded-lg py-2 px-5 text-white text-left mx-5 hover:bg-gray-700/80 transition-colors duration-200 hover:cursor-pointer"
+      >
+        {name}
+      </button>
+    </div>
+  );
 }
