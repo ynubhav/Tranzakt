@@ -43,17 +43,20 @@ export default function History(){
 
     return(
     <>
-    <div className="min-h-screen bg-gray-800">
+    <div className="min-h-screen bg-black">
     <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow"><Homenav pfplink={'johnpork.jpeg'}/></div>
     <div className="mt-[64px] overflow-y-auto flex-1 p-4">
     <div className="text-2xl font-bold p-2 text-white">Transaction History and spendings graph</div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ">
     <div className="grid grid-cols-1 gap-2 m-4">
-    <div className="text-xl text-white font-bold p-2 flex justify-left gap-10">
-      Summary :
+    <div className="text-xl text-white font-bold p-2 md:flex justify-left gap-10">
+      SUMMARY
+      <div className="flex justify-between gap-2">
       <div className="text-green-300">+ ${earn}{' '}</div>
       <div className="text-red-300">- ${spent}</div>
+      </div>
     </div>
+    <div className="overflow-y-auto max-h-100">
       {
       transactions.map((data,index)=>{
         const firstname=data.firstname
@@ -70,6 +73,7 @@ export default function History(){
       )
       })
     }
+    </div>
     </div>
     <div className="text-2xl font-bold text-white">Graphs</div>
     </div>
