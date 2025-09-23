@@ -89,7 +89,7 @@ export default function LandingPage() {
 
         {/* Hero Mockup Image */}
         <motion.img
-          src="dash.jpg" // replace with your screenshot
+          src="Tranzaktdash.png" // replace with your screenshot
           alt="Tranzakt Dashboard Screenshot"
           className="mt-16 w-full max-w-4xl rounded-xl shadow-2xl ring-1 ring-white/10 border border-white/10"
           variants={fadeUp}
@@ -99,7 +99,7 @@ export default function LandingPage() {
           viewport={{ once: true }}
         />
         <motion.img
-          src="history.jpg" // replace with your screenshot
+          src="image.png" // replace with your screenshot
           alt="Tranzakt Dashboard Screenshot"
           className="mt-16 w-full max-w-4xl rounded-xl shadow-2xl ring-1 ring-white/10 border border-white/10"
           variants={fadeUp}

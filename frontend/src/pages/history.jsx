@@ -72,10 +72,10 @@ export default function History() {
                   return (
                     <div
                       key={index}
-                      className={`text-white grid grid-cols-2 rounded-2xl p-2 gap-0.5 mt-1 bg-gray-950 border-2 ${
+                      className={`text-white grid grid-cols-2 rounded-2xl p-2 gap-0.5 mt-1 mx-1 bg-gray-950 border-2 ${
                         recieved
                           ? "border-green-500 hover:bg-green-950 hover:shadow-sm hover:shadow-green-300"
-                          : "border-red-500 hover:bg-red-950 hover:shadow-sm hover:shadow-red-300"
+                          : "border-rose-400 shadow-sm shadow-white hover:bg-red-950 hover:shadow-sm hover:shadow-red-300"
                       }`}
                     >
                       <p className="text-xl font-medium">
