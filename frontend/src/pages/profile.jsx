@@ -40,7 +40,7 @@ export default function Profile() {
                 onClick={() => {
                   setretract(!retract);
                 }}
-                className=" text-2xl text-orange-500 bg-gray-950 font-bold py-2 flex justify-center hover:cursor-pointer"
+                className=" text-2xl text-indigo-400 bg-gray-950 font-bold py-2 flex justify-center hover:cursor-pointer"
               >
                 <div className="flex items-center pt-2">
                   Tranzakt.pay

@@ -63,7 +63,7 @@ export default function LandingPage() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          ✨ Tranzakt — Your Money, <span className="text-indigo-400">Your Rules</span>.
+        Tranzakt — Your Money, <span className="text-indigo-400">Your Rules</span>.
         </motion.h1>
         <motion.p
           className="mt-6 max-w-xl text-lg md:text-2xl text-slate-300"

@@ -35,7 +35,7 @@ else
     </Routes>
     </AnimatePresence>
     </BrowserRouter>
-    <Toaster richColors  position="bottom-right" theme='dark'/>
+    <Toaster position="bottom-right" theme='dark'/>
     </>
   )
 }

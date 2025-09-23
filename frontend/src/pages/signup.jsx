@@ -158,7 +158,7 @@ export default function Signup() {
                     toast.error("Email already taken");
                   }
                 }}
-                className="flex justify-center w-full bg-orange-500 rounded-xl py-2 hover:bg-gray-700 hover:cursor-pointer"
+                className="flex justify-center w-full bg-indigo-400/80 rounded-xl py-2 hover:bg-gray-700 hover:cursor-pointer"
               >
                 {
               loading ? (

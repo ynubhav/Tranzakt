@@ -51,9 +51,9 @@ export default function Homenav({ pfplink }) {
         onClick={() => {
           navigate("/home");
         }}
-        className="font-bold text-2xl pl-2 text-orange-500 text-center cursor-pointer"
+        className="font-bold text-2xl pl-2 text-indigo-400 text-center cursor-pointer"
       >
-        Tranzakt.pay
+        Tranzakt
       </span>
 
       {/* Mobile Hamburger */}

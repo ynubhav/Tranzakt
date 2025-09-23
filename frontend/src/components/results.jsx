@@ -18,7 +18,7 @@ export default function Searchedusers({
           onMouseEnter={()=>{setmore(prev=>!prev)}}
           onMouseLeave={()=>{setmore(prev=>!prev)}}
           onClick={()=>{setmore(true)}}
-          className="w-1/1 p-2 flex justify-between items-center my-2 rounded-2xl bg-blue-800 shadow-lime-200 hover:cursor-pointer hover:shadow-sm"
+          className="w-1/1 p-2 flex justify-between items-center my-2 rounded-2xl bg-blue-800 shadow-white hover:cursor-pointer hover:shadow-sm transition-all"
         >
           <div className="flex items-center justify-between align-middle">
             <div>
@@ -33,7 +33,7 @@ export default function Searchedusers({
             </div>
           </div>
           {rendermore && <More username={username}/>}
-          <div className="flex gap-1">
+          <div className="flex gap-1 transition-all">
             {rendermore && (
               <button
                 onClick={onClick2}

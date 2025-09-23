@@ -23,7 +23,7 @@ userrouter.post("/signup", async (req, res) => {
       const token = jsonwebtoken.sign(
         { userId: user._id },
         process.env.JWT_SECRET,
-        { expiresIn: "30m" }
+        { expiresIn: "3d" }
       );
       res
         .status(200)
@@ -54,7 +54,7 @@ userrouter.post("/signin", async (req, res) => {
       const token = jsonwebtoken.sign(
         { userId: payload._id }, // safer to not include whole user
         process.env.JWT_SECRET,
-        { expiresIn: "30m" }
+        { expiresIn: "3d" }
       );
       res.status(200).json({ token: `Bearer ${token}` });
     } else {

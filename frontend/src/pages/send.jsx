@@ -17,6 +17,7 @@ export default function Send() {
   const [intransition, settransition] = useState(false);
   const [intransitionx, settransitionx] = useState(false);
   const [loading, setloading] = useState(false);
+  const [tag,settag]=useState('General');
   const navigate = useNavigate();
 
   const handleTransactiontoast = () => {
@@ -104,7 +105,7 @@ export default function Send() {
   return (
     <div className="fixed top-0 left-0 w-screen min-h-screen pt-30 bg-black text-white transition-all">
       <div className="flex justify-center ">
-        <div className="grid grid-cols-1 md:min-w-[350px] rounded-2xl bg-black  shadow-sm shadow-white">
+        <div className="grid grid-cols-1 md:min-w-[350px] rounded-2xl shadow-sm shadow-white">
           <div className="flex items-center justify-center ">
             <Pheader
               hname={<h1>Send Money</h1>}
@@ -118,6 +119,16 @@ export default function Send() {
             Username :{" "}
             <span className="text-green-600 font-bold">{username}</span>
           </div>
+
+          <select name="TAGs" onSelect={(e)=>{settag(e.target.value)}} id="" className="bg-indigo-400 text-black px-3 py-1 rounded-md m-4 appearance-none outline-none">
+          <option className="appearance-none rounded-t-2xl" value="General">General</option>
+          <option value="Food">Food</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Education">EMI</option>
+          <option value="EMI">EMI</option>
+          <option className="rounded-b-2xl" value="others">others</option>
+          </select>
+
           <Field
             fname={"Amount ($)"}
             fplaceholder={"Enter Amount"}
