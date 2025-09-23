@@ -48,7 +48,7 @@ export default function History() {
         <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow">
           <Homenav pfplink={"johnpork.jpeg"} />
         </div>
-        <div className="mt-[64px] overflow-y-auto flex-1 p-4">
+        <div className="mt-[55px] md:mt-[60px] overflow-y-auto flex-1 p-4">
           <div className="text-2xl font-bold p-2 text-white">
             Transaction History and spendings graph
           </div>
