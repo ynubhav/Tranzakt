@@ -12,6 +12,9 @@ import Homenav from './components/homenavbar'
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import './index.css'
+import AboutPage from './pages/about'
+import Features from './pages/features'
+import ForgotpasswordPage from './pages/forgotpassword'
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function App() {
@@ -26,7 +29,10 @@ else
     <Routes>
       <Route path='/signin' element={<Signin/>}/>
       <Route path='/send' element={<Send/>}/>
-      <Route path='/dashboard' element={<Dashboard user={'User'} pfplink={'johnpork.jpeg'}/>}/>
+      <Route path='/about' element={<AboutPage/>}/>
+      <Route path='/forgotpassword' element={<ForgotpasswordPage/>}/>
+      <Route path='/features' element={<Features/>}/>
+      <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/profile' element={<Profile/>}/>
       <Route path='/home' element={<Home/>} />

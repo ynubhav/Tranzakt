@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import Navbar from "../components/dashnavbar";
 import axios from "axios";
 import Searchedusers from "../components/results";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Homenav from "../components/homenavbar";
-import { motion } from "framer-motion";
 import { toast } from "sonner";
 const apiUrl = import.meta.env.VITE_API_URL;
 

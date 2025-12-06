@@ -80,6 +80,7 @@ export default function Homenav({ pfplink }) {
       {/* Desktop Menu */}
       <div className="hidden md:inline-flex justify-between align-middle text-white flex-wrap">
         <span
+        onClick={()=>navigate('/about')}
           className={`my-2 mx-4 sm:mx-2 p-2 hover:cursor-pointer rounded-2xl hover:underline underline-offset-8 decoration-white decoration-1 bg-${
             focused[0] ? "orange-500" : ""
           }`}
@@ -87,6 +88,7 @@ export default function Homenav({ pfplink }) {
           About
         </span>
         <span
+         onClick={()=>navigate('/features')}
           className={`my-2 mx-4 sm:mx-2 p-2 hover:cursor-pointer rounded-2xl hover:underline underline-offset-8 decoration-white decoration-1 bg-${
             focused[1] ? "orange-500" : ""
           }`}
@@ -115,7 +117,7 @@ export default function Homenav({ pfplink }) {
             onClick={() => {
               navigate("/signin");
             }}
-            className={`my-2 mx-4 sm:mx-2 p-2 hover:cursor-pointer rounded-2xl hover:underline underline-offset-8 decoration-white decoration-1 bg-${
+            className={`my-2 mx-4 sm:mx-2 px-4 py-2 bg-indigo-600 hover:scale-105 transition-all duration-200 hover:cursor-pointer rounded-2xl  bg-${
               focused[5] ? "orange-500" : ""
             }`}
           >

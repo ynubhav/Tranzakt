@@ -41,6 +41,7 @@ export default function Signin() {
             ftype={"password"}
             fplaceholder={"*******"}
           />
+          <label onClick={()=>navigate('/forgotpassword')} htmlFor="forgot password" className="p-2 text-indigo-600 hover:underline underline-offset-1 text-center hover:cursor-pointer">Forgot Password ?</label>
           <Button
             onClick={async () => {
                 if(loading)
